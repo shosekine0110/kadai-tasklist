@@ -1,19 +1,25 @@
-<h1>タスク一覧</h1>
+@extends('layouts.app')
 
-<a href="{{ route('tasks.create') }}">新規タスク作成</a>
+@section('content')
+    <h1>タスク一覧</h1>
 
-<ul>
-    @foreach ($tasks as $task)
-        <li>
-            {{ $task->content }}
-            <a href="{{ route('tasks.show', $task->id) }}">詳細</a>
-            <a href="{{ route('tasks.edit', $task->id) }}">編集</a>
+    <a href="/tasks/create">新規作成</a>
 
-            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display:inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit">削除</button>
-            </form>
-        </li>
-    @endforeach
-</ul>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>タスク</th>
+            <th>ステータス</th>
+            <th>詳細</th>
+        </tr>
+
+        @foreach ($tasks as $task)
+            <tr>
+                <td>{{ $task->id }}</td>
+                <td>{{ $task->content }}</td>
+                <td>{{ $task->status }}</td>
+                <td><a href="/tasks/{{ $task->id }}">表示</a></td>
+            </tr>
+        @endforeach
+    </table>
+@endsection

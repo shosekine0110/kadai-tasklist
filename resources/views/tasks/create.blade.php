@@ -1,9 +1,32 @@
-<h1>タスク新規作成</h1>
+@extends('layouts.app')
 
-<form action="{{ route('tasks.store') }}" method="POST">
-    @csrf
-    <input type="text" name="content" placeholder="タスク内容">
-    <button type="submit">登録</button>
-</form>
+@section('content')
+    <h1>タスク新規作成</h1>
 
-<a href="/">戻る</a>
+    {{-- エラーメッセージ --}}
+    @if ($errors->any())
+        <div>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form action="/tasks" method="POST">
+        @csrf
+
+        <div>
+            <label>タスク</label>
+            <input type="text" name="content" value="{{ old('content') }}">
+        </div>
+
+        <div>
+            <label>ステータス</label>
+            <input type="text" name="status" value="{{ old('status') }}">
+        </div>
+
+        <button type="submit">作成</button>
+    </form>
+@endsection

@@ -20,11 +20,17 @@ class TasksController extends Controller
 
     public function store(Request $request)
     {
+        // バリデーション
         $request->validate([
             'content' => 'required|max:255',
+            'status' => 'required|max:10',
         ]);
 
-        Task::create($request->only('content'));
+        // 保存
+        Task::create([
+            'content' => $request->content,
+            'status' => $request->status,
+        ]);
 
         return redirect('/');
     }
@@ -41,11 +47,17 @@ class TasksController extends Controller
 
     public function update(Request $request, Task $task)
     {
+        // バリデーション
         $request->validate([
             'content' => 'required|max:255',
+            'status' => 'required|max:10',
         ]);
 
-        $task->update($request->only('content'));
+        // 更新
+        $task->update([
+            'content' => $request->content,
+            'status' => $request->status,
+        ]);
 
         return redirect('/');
     }
