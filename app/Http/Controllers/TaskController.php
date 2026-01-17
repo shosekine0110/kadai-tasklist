@@ -7,17 +7,11 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
-    public function __construct()
-    {
-        // 全アクションをログインユーザー専用にする
-        $this->middleware('auth');
-    }
-
     public function index()
     {
-        // ログインユーザーのタスクだけ取得
-        $tasks = auth()->user()
-            ->tasks()
+        $user = auth()->user();   // ★ IDE が型を理解しやすい
+
+        $tasks = $user->tasks()
             ->orderBy('id', 'desc')
             ->paginate(10);
 
@@ -36,8 +30,9 @@ class TaskController extends Controller
             'status' => 'required|max:10',
         ]);
 
-        // ログインユーザーに紐づけてタスク作成
-        auth()->user()->tasks()->create([
+        $user = auth()->user();   // ★ ここも変数にする
+
+        $user->tasks()->create([
             'content' => $validated['content'],
             'status' => $validated['status'],
         ]);
@@ -47,7 +42,6 @@ class TaskController extends Controller
 
     public function show(Task $task)
     {
-        // 他人のタスクは見れない
         if ($task->user_id !== auth()->id()) {
             return redirect('/');
         }
