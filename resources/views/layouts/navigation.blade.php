@@ -15,6 +15,11 @@
                     <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.index')">
                         {{ __('Tasks') }}
                     </x-nav-link>
+
+                    <!-- ★ お気に入りリンク（PC表示） -->
+                    <x-nav-link :href="route('users.favorites', auth()->id())" :active="request()->routeIs('users.favorites')">
+                        お気に入り
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -69,6 +74,11 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.index')">
                 {{ __('Tasks') }}
+            </x-responsive-nav-link>
+
+            <!-- ★ お気に入りリンク（スマホ表示） -->
+            <x-responsive-nav-link :href="route('users.favorites', auth()->id())" :active="request()->routeIs('users.favorites')">
+                お気に入り
             </x-responsive-nav-link>
         </div>
 

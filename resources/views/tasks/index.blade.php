@@ -27,6 +27,7 @@
                             <th class="p-2 text-left">詳細</th>
                             <th class="p-2 text-left">編集</th>
                             <th class="p-2 text-left">削除</th>
+                            <th class="p-2 text-left">お気に入り</th> <!-- ★ 追加 -->
                         </tr>
                     </thead>
 
@@ -62,6 +63,27 @@
                                         </button>
                                     </form>
                                 </td>
+
+                                <!-- ★ お気に入りボタン -->
+                                <td class="p-2">
+                                    @if (auth()->user()->favorites->contains($task->id))
+                                        <form action="{{ route('favorite.destroy', $task->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="text-yellow-600 hover:underline">
+                                                Unfavorite
+                                            </button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('favorite.store', $task->id) }}" method="POST">
+                                            @csrf
+                                            <button class="text-blue-600 hover:underline">
+                                                Favorite
+                                            </button>
+                                        </form>
+                                    @endif
+                                </td>
+                                <!-- ★ ここまで -->
                             </tr>
                         @endforeach
                     </tbody>

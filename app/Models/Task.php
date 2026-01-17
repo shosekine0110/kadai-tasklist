@@ -12,4 +12,11 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // ★ ここに追加（お気に入りしたユーザー一覧）
+    public function favoritedBy()
+    {
+        return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
+    }
 }
+
